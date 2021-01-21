@@ -6,14 +6,17 @@ const url = "https://course-api.com/react-tabs-project";
 
 function App() {
   const [jobs, setJobs] = useState([]);
-  let dataLoaded = false;
+  const [dataLoaded, setDataLoaded] = useState(false);
 
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => console.log("Error: ", error));
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setJobs(data);
+        setDataLoaded(true);
+      })
+      .catch((error) => console.log("Error: ", error));
+  }, []);
 
   if (dataLoaded) {
     return (
@@ -22,12 +25,13 @@ function App() {
           <h2>experience</h2>
           <div className="underline"></div>
         </div>
+        <h1>Test</h1>
       </section>
     );
   } else {
     return (
       <section className="section">
-        <div className="title">
+        <div className="loading">
           <h2>Loading ...</h2>
         </div>
       </section>
